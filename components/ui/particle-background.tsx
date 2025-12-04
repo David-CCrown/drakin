@@ -61,7 +61,10 @@ export function ParticleBackground() {
 
         const init = () => {
             particles = []
-            const particleCount = Math.min(window.innerWidth * 0.05, 100) // Responsive count
+            // Reduce particle count for performance
+            const isMobile = window.innerWidth < 768
+            const particleCount = isMobile ? 20 : Math.min(window.innerWidth * 0.03, 60)
+
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle())
             }

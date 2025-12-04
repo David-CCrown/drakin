@@ -41,9 +41,9 @@ export default function Home() {
             <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-medium tracking-wider mb-6 border border-primary/20">
               FEDERAL TEACHING HOSPITAL
             </span>
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-slate-900 mb-4">
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-slate-900 mb-4 font-display">
               Dr. Olugbemi
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent font-[family-name:var(--font-pinyon)] font-normal py-2">
                 Benedict Akintububo
               </span>
             </h1>

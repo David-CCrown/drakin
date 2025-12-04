@@ -234,20 +234,20 @@ export default function AboutPage() {
                 <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.div
                         {...fadeInUp}
-                        className="max-w-3xl mx-auto text-center text-white space-y-8"
+                        className="max-w-3xl mx-auto text-center space-y-8"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                        <h2 className="text-4xl md:text-5xl font-bold leading-tight text-slate-900">
                             Ready to Start Your
                             <br />
-                            Health Journey?
+                            <span className="text-primary font-display italic">Health Journey?</span>
                         </h2>
-                        <p className="text-xl text-white/90">
+                        <p className="text-xl text-slate-600">
                             Schedule a consultation and experience personalized, compassionate medical care.
                         </p>
                         <Button
                             size="lg"
                             asChild
-                            className="h-14 px-8 text-lg bg-white text-primary hover:bg-white/90 shadow-luxury-lg"
+                            className="h-14 px-8 text-lg bg-primary text-white hover:bg-primary/90 shadow-luxury-lg rounded-full"
                         >
                             <Link href="/contact">
                                 Book Consultation

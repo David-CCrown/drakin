@@ -200,6 +200,11 @@
   }
 }
 
+@theme {
+  --font-display: var(--font-playfair), serif;
+  --font-script: var(--font-pinyon), cursive;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -207,8 +212,20 @@
 
   body {
     @apply bg-background text-foreground;
-    cursor: none;
-    /* Hide default cursor for custom one */
+
+    /* Only hide cursor on desktop where custom cursor is active */
+    @media (pointer: fine) {
+      cursor: none;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
   }
 }
 

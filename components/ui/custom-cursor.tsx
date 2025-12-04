@@ -13,6 +13,10 @@ export function CustomCursor() {
     const cursorYSpring = useSpring(cursorY, springConfig)
 
     useEffect(() => {
+        // Only enable custom cursor on devices with fine pointer (mouse)
+        const mediaQuery = window.matchMedia("(pointer: fine)")
+        if (!mediaQuery.matches) return
+
         const moveCursor = (e: MouseEvent) => {
             cursorX.set(e.clientX - 16)
             cursorY.set(e.clientY - 16)

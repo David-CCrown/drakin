@@ -23,10 +23,13 @@ export function Header() {
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20)
+            if (mobileMenuOpen && window.scrollY > 50) {
+                setMobileMenuOpen(false)
+            }
         }
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
+    }, [mobileMenuOpen])
 
     return (
         <motion.header
@@ -48,8 +51,8 @@ export function Header() {
                             <Stethoscope className="w-5 h-5" />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-lg font-bold text-slate-900 tracking-tight leading-none group-hover:text-primary transition-colors">
-                                Dr. Akintububo
+                            <span className="text-lg font-bold text-slate-900 tracking-tight leading-none group-hover:text-primary transition-colors font-display">
+                                Dr. <span className="font-[family-name:var(--font-pinyon)] text-2xl text-primary font-normal">Akintububo</span>
                             </span>
                             <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
                                 Maxillofacial Surgeon
@@ -102,62 +105,81 @@ export function Header() {
                 </div>
             </nav>
 
-            {/* Mobile Navigation */}
+            {/* Mobile Navigation - Partial Slide-over */}
             <AnimatePresence>
                 {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "100vh" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="lg:hidden fixed inset-0 top-0 bg-white z-40 flex flex-col pt-24 px-6"
-                    >
-                        {/* Close Button for Mobile Menu */}
-                        <button
-                            className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 text-slate-900 hover:bg-slate-200 transition-colors"
-                            onClick={() => setMobileMenuOpen(false)}
-                            aria-label="Close menu"
-                        >
-                            <X className="h-6 w-6" />
-                        </button>
-
-                        <div className="flex flex-col gap-4">
-                            {navigation.map((item, i) => (
-                                <motion.div
-                                    key={item.name}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: i * 0.1 }}
-                                >
-                                    <Link
-                                        href={item.href}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className={cn(
-                                            "block text-3xl font-bold tracking-tight py-2",
-                                            pathname === item.href
-                                                ? "text-primary"
-                                                : "text-slate-900"
-                                        )}
-                                    >
-                                        {item.name}
-                                    </Link>
-                                </motion.div>
-                            ))}
-                        </div>
-
+                    <>
+                        {/* Backdrop */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
-                            className="mt-auto mb-10"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+                        />
+
+                        {/* Menu Panel */}
+                        <motion.div
+                            initial={{ x: "100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            className="lg:hidden fixed inset-y-0 right-0 w-full max-w-xs bg-white/90 backdrop-blur-xl shadow-2xl z-50 flex flex-col p-6 border-l border-white/50"
                         >
-                            <Button asChild size="lg" className="w-full rounded-full text-lg h-14">
-                                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                                    Book Appointment
-                                </Link>
-                            </Button>
+                            <div className="flex items-center justify-between mb-8">
+                                <span className="text-lg font-bold font-display text-slate-900">Menu</span>
+                                <button
+                                    className="p-2 rounded-full bg-slate-100 text-slate-900 hover:bg-slate-200 transition-colors"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    aria-label="Close menu"
+                                >
+                                    <X className="h-5 w-5" />
+                                </button>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                {navigation.map((item, i) => (
+                                    <motion.div
+                                        key={item.name}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.1 + (i * 0.05) }}
+                                    >
+                                        <Link
+                                            href={item.href}
+                                            onClick={() => setMobileMenuOpen(false)}
+                                            className={cn(
+                                                "block text-xl font-medium py-3 px-4 rounded-xl transition-all",
+                                                pathname === item.href
+                                                    ? "bg-primary/10 text-primary"
+                                                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                                            )}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                className="mt-auto"
+                            >
+                                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 mb-4">
+                                    <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-2">Contact</p>
+                                    <p className="text-sm text-slate-900 font-semibold">+234 800 000 0000</p>
+                                    <p className="text-sm text-slate-600">contact@drakintububo.com</p>
+                                </div>
+                                <Button asChild size="lg" className="w-full rounded-xl text-base h-12 shadow-lg shadow-primary/20">
+                                    <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                                        Book Appointment
+                                    </Link>
+                                </Button>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
+                    </>
                 )}
             </AnimatePresence>
         </motion.header>
