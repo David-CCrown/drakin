@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion"
 const navigation = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
+    { name: "Documentary", href: "/documentary" },
     { name: "Contact", href: "/contact" },
 ]
 
@@ -111,6 +112,15 @@ export function Header() {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="lg:hidden fixed inset-0 top-0 bg-white z-40 flex flex-col pt-24 px-6"
                     >
+                        {/* Close Button for Mobile Menu */}
+                        <button
+                            className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 text-slate-900 hover:bg-slate-200 transition-colors"
+                            onClick={() => setMobileMenuOpen(false)}
+                            aria-label="Close menu"
+                        >
+                            <X className="h-6 w-6" />
+                        </button>
+
                         <div className="flex flex-col gap-4">
                             {navigation.map((item, i) => (
                                 <motion.div
